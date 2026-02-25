@@ -1,0 +1,139 @@
+@font-face {
+    font-family: "LogoFont";
+    src: url("../fonts/Pacifico-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    background-color: #D7C8B9;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#app-div {
+    position: absolute;
+    /*border: 1px solid black;*/
+    height: 50vh;
+    width: 60vw;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#logo-div {
+    position: relative;
+    /*border: 1px solid black;*/
+    height: 10rem;
+    width: max-content;
+    top: 3rem;
+}
+
+#logo-img {
+    height: 100%;
+    transition: transform 0.3s;
+}
+
+#logo-img:hover {
+    transform: rotate(-5deg) scale(0.95);
+}
+
+#logo-span {
+    font-family: "LogoFont", sans-serif;
+    font-size: 1.5rem;
+    color: #291E1A;
+    position: relative;
+    left: -0.5rem;
+    top: -8rem;
+    cursor: default;
+}
+
+#original-div {
+    position: absolute;
+    left: 12rem;
+    top: 6rem;
+    font-family: Roboto, sans-serif;
+}
+
+#original-input {
+    width: 35rem;
+    height: 2rem;
+    border: none;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    padding: 0 0.5rem;
+    transition: box-shadow 0.3s;
+}
+
+#original-input:hover, #original-input:focus {
+    box-shadow: 0 0 0.5rem #291E1A;
+    outline: none;
+}
+
+#original-button {
+    height: 2rem;
+    width: 8rem;
+    font-size: 1.3rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: white;    
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.1s;
+    vertical-align: top;
+}
+
+#original-button:hover {
+    box-shadow: 0 0 0.5rem #291E1A;
+}
+
+#original-button:active {
+    transform: scale(0.95);
+}
+
+#shorten-div {
+    position: absolute;
+    left: 12rem;
+    top: 10rem;
+    font-family: Roboto, sans-serif;
+}
+
+#shorten-input {
+    width: 35rem;
+    height: 2rem;
+    border: none;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    padding: 0 0.5rem;
+    transition: box-shadow 0.3s;
+}
+
+#shorten-input:hover, #shorten-input:focus {
+    box-shadow: 0 0 0.5rem #291E1A;
+    outline: none;
+}
+
+#shorten-button {
+    height: 2rem;
+    width: 8rem;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: white;    
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.1s;
+    background-image: url("../images/copy.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: top;
+}
+
+#shorten-button:hover {
+    box-shadow: 0 0 0.5rem #291E1A;
+}
+
+#shorten-button:active {
+    transform: scale(0.95);
+}
