@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shorty</title>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app-div">
+        <div id="logo-div">
+            <img id="logo-img" src="images/Logo.png">
+            <span id="logo-span">Shorty</span>
+        </div>
+        <div id="original-div">
+            <input id="original-input" type="url">
+            <button id="original-button">Shorten</button>
+        </div>
+        <div id="shorten-div">
+            <input id="shorten-input" type="url">
+            <button id="shorten-button"></button>
+        </div>
+    </div>
+
+    <script>
+        let original_input = document.getElementById("original-input");
+        let original_button = document.getElementById("original-button");
+        let shorten_input = document.getElementById("shorten-input");
+        let shorten_button = document.getElementById("shorten-button");
+
+        original_button.addEventListener("click", async function() {
+            let url = original_input.value.trim();
+            let response = await fetch("original_url", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain; charset=utf-8"
+                },
+                body: url
+            });
+
+            if (response.status === 201) {
+                shorten_input.value = await response.text();
+            }
+        });
+
+        shorten_button.addEventListener("click", async function() {
+            let short_url = shorten_input.value.trim();
+            await navigator.clipboard.writeText(short_url);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+services:
+  db:
+    image: postgres:18-alpine3.23
+    container_name: db
+    restart: unless-stopped
+    expose:
+      - "5432"
+    env_file:
+      - .env
+    volumes:
+      - type: volume
+        source: shorty-db
+        target: /var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      start_period: 10s
+      start_interval: 1s
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - backend-net
+
+  migrations:
+    build: .
+    image: shorty-app:v1.0
+    container_name: migrations
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=db
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend-net
+    command: ["alembic", "upgrade", "head"]
+
+  app:
+    image: shorty-app:v1.0
+    container_name: app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=db
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+    networks:
+      - backend-net
+      - frontend-net
+
+  nginx:
+    build:
+      context: frontend
+    image: shorty-nginx:v1.0
+    container_name: nginx
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_started
+    ports:
+      - "80:80"
+    networks:
+      - frontend-net
+
+
+networks:
+  backend-net:
+    name: backend-net
+  frontend-net:
+    name: frontend-net
+
+volumes:
+  shorty-db:
+    name: shorty-db
