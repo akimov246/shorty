@@ -36,19 +36,44 @@ services:
       - backend-net
     command: ["alembic", "upgrade", "head"]
 
+  redis:
+    image: redis:8.2.4-alpine3.22
+    container_name: redis
+    restart: unless-stopped
+    expose:
+      - "6379"
+    env_file:
+      - .env
+    volumes:
+      - type: volume
+        source: shorty-redis
+        target: /data
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli", "ping" ]
+      start_period: 10s
+      start_interval: 1s
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - backend-net
+
   app:
     image: shorty-app:v1.0
     container_name: app
     restart: unless-stopped
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     env_file:
       - .env
     environment:
       - POSTGRES_HOST=db
+      - REDIS_HOST=redis
     depends_on:
       migrations:
         condition: service_completed_successfully
+      redis:
+        condition: service_healthy
     networks:
       - backend-net
       - frontend-net
@@ -63,7 +88,10 @@ services:
       app:
         condition: service_started
     ports:
-      - "80:80"
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
     networks:
       - frontend-net
 
@@ -77,3 +105,5 @@ networks:
 volumes:
   shorty-db:
     name: shorty-db
+  shorty-redis:
+    name: shorty-redis

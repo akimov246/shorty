@@ -18,6 +18,11 @@ class Settings(BaseSettings):
     def POSTGRES_URL(self) -> str:
         return f"postgresql+psycopg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
 
+    REDIS_HOST: str
+    REDIS_PORT: str
+    REDIS_EXPIRE_SECONDS: int
+    REDIS_LIMIT: int
+
     model_config = SettingsConfigDict(
         env_file=ENV_PATH,
         env_file_encoding="utf-8",

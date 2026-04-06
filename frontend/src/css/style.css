@@ -18,7 +18,7 @@ body {
     position: absolute;
     /*border: 1px solid black;*/
     height: 50vh;
-    width: 60vw;
+    width: clamp(40rem, 70vw, 100vw);
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -52,14 +52,17 @@ body {
 }
 
 #original-div {
+    display: flex;
+    gap: 0.3vw;
     position: absolute;
     left: 12rem;
     top: 6rem;
+    right: 1rem;
     font-family: Roboto, sans-serif;
 }
 
 #original-input {
-    width: 35rem;
+    flex-grow: 1;
     height: 2rem;
     border: none;
     font-size: 1.5rem;
@@ -94,14 +97,17 @@ body {
 }
 
 #shorten-div {
+    display: flex;
+    gap: 0.3vw;
     position: absolute;
     left: 12rem;
+    right: 1rem;
     top: 10rem;
     font-family: Roboto, sans-serif;
 }
 
 #shorten-input {
-    width: 35rem;
+    flex-grow: 1;
     height: 2rem;
     border: none;
     font-size: 1.5rem;
